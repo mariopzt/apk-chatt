@@ -17,10 +17,12 @@ function App() {
     const handleKeyPress = (event) => {
       if (event.key === "Enter") {
         sendMessage();
+        event.preventDefault();
       }
     };
+
     if (textareaRef.current) {
-      textareaRef.current.style.height = "auto"; // Resetea la altura
+      textareaRef.current.style.height = "auto";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
 
@@ -30,6 +32,11 @@ function App() {
       window.removeEventListener("keydown", handleKeyPress);
     };
   }, [mensajeEnviado]);
+  useEffect(() => {
+    if (endChat.current) {
+      endChat.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [mensajeTotal]);
 
   const sendMessage = async () => {
     if (!mensajeEnviado.trim()) return;
@@ -93,25 +100,24 @@ function App() {
           );
         })}
         <div ref={endChat} />
-       
       </div>
-       <div className="botonEnviar">
-          <textarea
-            ref={textareaRef}
-            placeholder="What do you want to say?"
-            value={mensajeEnviado}
-            onChange={(e) => {
-              setMensajeEnviado(e.target.value);
-            }}
-            className="inputEnviar"
-          ></textarea>
-          <button className="boton" onClick={sendMessage}>
-            <CircleFadingArrowUp
-              className="botonP"
-              color="#9b9a9a"
-            ></CircleFadingArrowUp>
-          </button>
-        </div>
+      <div className="botonEnviar">
+        <textarea
+          ref={textareaRef}
+          placeholder="What do you want to say?"
+          value={mensajeEnviado}
+          onChange={(e) => {
+            setMensajeEnviado(e.target.value);
+          }}
+          className="inputEnviar"
+        ></textarea>
+        <button className="boton" onClick={sendMessage}>
+          <CircleFadingArrowUp
+            className="botonP"
+            color="#9b9a9a"
+          ></CircleFadingArrowUp>
+        </button>
+      </div>
     </div>
   );
 }
