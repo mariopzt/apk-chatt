@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { CircleUserRound } from "lucide-react";
 import "./App.css";
-import { BotMessageSquare } from "lucide-react";
+import { CircleFadingArrowUp } from "lucide-react";
 
 function App() {
   const [mensajeTotal, setMensajeTotal] = useState([
@@ -58,6 +57,11 @@ function App() {
       console.error("Error al contactar con la API:", error);
     }
   };
+  window.addEventListener((event) => {
+    if (event.key === "Enter") {
+      sendMessage();
+    }
+  });
 
   return (
     <div className="padre">
@@ -86,9 +90,11 @@ function App() {
             onChange={(e) => {
               setMensajeEnviado(e.target.value);
             }}
-            style={{ width: "100%", height: "20px", borderRadius: "4px" }}
+            className="inputEnviar"
           ></input>
-          <button onClick={sendMessage}>Send</button>
+          <button className="boton" onClick={sendMessage}>
+            <CircleFadingArrowUp color="#9b9a9a"></CircleFadingArrowUp>
+          </button>
         </div>
       </div>
     </div>
