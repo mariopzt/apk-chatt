@@ -11,10 +11,25 @@ function App() {
   ]);
   const [mensajeEnviado, setMensajeEnviado] = useState("");
   const endChat = useRef(null);
+  const textareaRef = useRef(null);
 
   useEffect(() => {
-    endChat.current?.scrollIntoView({ behavior: "smooth" });
-  }, [mensajeTotal]);
+    const handleKeyPress = (event) => {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    };
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto"; // Resetea la altura
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [mensajeEnviado]);
 
   const sendMessage = async () => {
     if (!mensajeEnviado.trim()) return;
@@ -57,11 +72,6 @@ function App() {
       console.error("Error al contactar con la API:", error);
     }
   };
-  window.addEventListener((event) => {
-    if (event.key === "Enter") {
-      sendMessage();
-    }
-  });
 
   return (
     <div className="padre">
@@ -77,26 +87,31 @@ function App() {
               <div
                 className={`${mensaje.role === "assistant" ? "IA" : "User"} `}
               >
-                <div style={{}}>{mensaje.content}</div>
+                <div className="contenido">{mensaje.content}</div>
               </div>
             </div>
           );
         })}
         <div ref={endChat} />
-        <div className="botonEnviar">
-          <input
+       
+      </div>
+       <div className="botonEnviar">
+          <textarea
+            ref={textareaRef}
             placeholder="What do you want to say?"
             value={mensajeEnviado}
             onChange={(e) => {
               setMensajeEnviado(e.target.value);
             }}
             className="inputEnviar"
-          ></input>
+          ></textarea>
           <button className="boton" onClick={sendMessage}>
-            <CircleFadingArrowUp color="#9b9a9a"></CircleFadingArrowUp>
+            <CircleFadingArrowUp
+              className="botonP"
+              color="#9b9a9a"
+            ></CircleFadingArrowUp>
           </button>
         </div>
-      </div>
     </div>
   );
 }
