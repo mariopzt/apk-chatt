@@ -67,28 +67,25 @@ function App() {
             <div
               style={{
                 marginBottom: "10px",
-                minHeight: "35px",
-                backgroundColor: "red",
+                minHeight: "20px",
                 paddingLeft: "10px",
                 marginLeft: "10px",
                 borderRadius: "10px",
                 display: "flex",
-                paddingTop: "10px",
-                paddingRight: "15px",
-                paddingBottom: "6px",
+                padding: "10px",
                 color: "white",
                 width: "fit-content",
                 maxWidth: "80%",
               }}
               key={index}
             >
-              <div style={{ display: "flex", aliginItems: "start" }}>
+              <div style={{ display: "flex", alignItems: "start" }}>
                 {mensaje.role == "assistant" ? (
                   <BotMessageSquare
                     size={30}
-                    color="white"
+                    color="red"
                     style={{
-                      paddingRight: "10px",
+                      paddingRight: "5px",
                       flexShrink: 0,
                       paddingTop: "0",
                     }}
@@ -96,15 +93,24 @@ function App() {
                 ) : (
                   <CircleUserRound
                     size={30}
-                    color="white"
+                    color="red"
                     style={{
                       flexShrink: 0,
-                      paddingRight: "10px",
+                      paddingRight: "5px",
                       paddingTop: "0",
                     }}
                   />
                 )}
-                <div style={{}}>{mensaje.content}</div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  color: "black",
+                }}
+              >
+                {mensaje.content}
               </div>
             </div>
           );
