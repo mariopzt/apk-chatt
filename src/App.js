@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { CircleUserRound } from "lucide-react";
-
+import "./App.css";
 import { BotMessageSquare } from "lucide-react";
+
 function App() {
   const [mensajeTotal, setMensajeTotal] = useState([
     {
@@ -10,6 +11,11 @@ function App() {
     },
   ]);
   const [mensajeEnviado, setMensajeEnviado] = useState("");
+  const endChat = useRef(null);
+
+  useEffect(() => {
+    endChat.current?.scrollIntoView({ behavior: "smooth" });
+  }, [mensajeTotal]);
 
   const sendMessage = async () => {
     if (!mensajeEnviado.trim()) return;
@@ -55,73 +61,25 @@ function App() {
 
   return (
     <div className="padre">
-      <div
-        className="chat"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <div className="hijoPadre">
         {mensajeTotal.map((mensaje, index) => {
           return (
             <div
-              style={{
-                marginBottom: "10px",
-                minHeight: "20px",
-                paddingLeft: "10px",
-                marginLeft: "10px",
-                borderRadius: "10px",
-                display: "flex",
-                padding: "10px",
-                color: "white",
-                width: "fit-content",
-                maxWidth: "80%",
-              }}
+              className={`${
+                mensaje.role === "assistant" ? "asistente" : "usuario"
+              } mensjPadre`}
               key={index}
             >
-              <div style={{ display: "flex", alignItems: "start" }}>
-                {mensaje.role == "assistant" ? (
-                  <BotMessageSquare
-                    size={30}
-                    color="red"
-                    style={{
-                      paddingRight: "5px",
-                      flexShrink: 0,
-                      paddingTop: "0",
-                    }}
-                  />
-                ) : (
-                  <CircleUserRound
-                    size={30}
-                    color="red"
-                    style={{
-                      flexShrink: 0,
-                      paddingRight: "5px",
-                      paddingTop: "0",
-                    }}
-                  />
-                )}
-              </div>
               <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  color: "black",
-                }}
+                className={`${mensaje.role === "assistant" ? "IA" : "User"} `}
               >
-                {mensaje.content}
+                <div style={{}}>{mensaje.content}</div>
               </div>
             </div>
           );
         })}
-        <div
-          style={{
-            width: "500px",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
+        <div ref={endChat} />
+        <div className="botonEnviar">
           <input
             placeholder="What do you want to say?"
             value={mensajeEnviado}
