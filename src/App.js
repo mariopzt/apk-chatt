@@ -8,6 +8,8 @@ function App() {
   const [mensjBienvenido, setMensjBienvenido] = useState(true);
   const [cargando, setCargando] = useState(false);
   const [mensjEscribiendolo, setMensjEscribiendolo] = useState("");
+  const [consulta, setConsulta] = useState(true);
+
   const endChat = useRef(null);
   const textareaRef = useRef(null);
 
@@ -34,23 +36,34 @@ function App() {
     if (endChat.current) {
       endChat.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [mensajeTotal]);
+  }, [mensajeTotal, mensjEscribiendolo]);
 
-  // const agregarTextoEscribiendoIa = (respuestaIa) => {
-  //   let i = 0;
-  // //  setMensjEscribiendolo("");
-  //   const interval = setInterval(() => {
-  //     if (i < respuestaIa.length) {
-  //       setMensjEscribiendolo((prev) => prev + respuestaIa[i]);
-  //       i++;
-  //     } else {
-  //       clearInterval(interval);
-  //     }
-  //   }, 30);
-  // };
+  const agregarTextoEscribiendoIa = (respuestaIa) => {
+    let i = 0;
+
+    setMensjEscribiendolo("");
+
+    const interval = setInterval(() => {
+      if (i < respuestaIa.length) {
+        setMensjEscribiendolo((prev) => prev + respuestaIa[i - 1]);
+        i++;
+      } else {
+        clearInterval(interval);
+
+        setMensajeTotal((valorAnterior) => [
+          ...valorAnterior,
+          { role: "assistant", content: respuestaIa || "Sin respuesta." },
+        ]);
+        setConsulta(true);
+        setMensjEscribiendolo("");
+      }
+    }, 5);
+  };
 
   const sendMessage = async () => {
-    if (!mensajeEnviado.trim()) return;
+    console.log(consulta);
+    if (!mensajeEnviado.trim() || !consulta) return;
+    setConsulta(false);
     setMensjBienvenido(false);
     const newMessages = {
       role: "user",
@@ -83,11 +96,8 @@ function App() {
       const data = await respuesta.json();
       const respuestaIa =
         data.choices?.[0]?.message?.content || "Sin respuesta.";
-      setMensajeTotal((valorAnterior) => [
-        ...valorAnterior,
-        { role: "assistant", content: respuestaIa },
-      ]);
-      //agregarTextoEscribiendoIa(respuestaIa);
+
+      agregarTextoEscribiendoIa(respuestaIa);
     } catch (error) {
       console.error("Error al contactar con la API:", error);
     } finally {
@@ -99,6 +109,9 @@ function App() {
     <div className="padre">
       <div className="hijoPadre">
         {mensajeTotal.map((mensaje, index) => {
+          const esUltimoMensaje = index === mensajeTotal.length - 1;
+          const esAsistente = mensaje.role === "assistant";
+
           return (
             <div
               className={`${
@@ -109,16 +122,28 @@ function App() {
               <div
                 className={`${mensaje.role === "assistant" ? "IA" : "User"} `}
               >
-                {mensaje.role === "assistant" ? (
-                  <div className="usuarioTexto">{mensaje.content}</div>
-                ) : (
-                  <div className="usuarioTexto">{mensaje.content}</div>
-                )}
+                {esAsistente
+                  ? esUltimoMensaje && mensjEscribiendolo !== ""
+                    ? mensjEscribiendolo
+                    : mensaje.content
+                  : mensaje.content}
               </div>
             </div>
           );
         })}
 
+        {mensjBienvenido && (
+          <div className="bienvenida">
+            ¡Bienvenido a GPT, donde estoy aquí para ayudarte con lo que
+            necesites en una sola línea!
+          </div>
+        )}
+        {mensjEscribiendolo && (
+          <div className="asistente mensjPadre escribiendo">
+            <div className="IA">{mensjEscribiendolo}</div>
+          </div>
+        )}
+        <div ref={endChat} />
         {cargando && (
           <div className="dots-loader">
             <div className="dot"></div>
@@ -126,13 +151,6 @@ function App() {
             <div className="dot"></div>
           </div>
         )}
-        {mensjBienvenido && (
-          <div className="bienvenida">
-            ¡Bienvenido a GPT, donde estoy aquí para ayudarte con lo que
-            necesites en una sola línea!
-          </div>
-        )}
-        <div ref={endChat} />
       </div>
 
       <div className="botonEnviar">
@@ -140,16 +158,14 @@ function App() {
           ref={textareaRef}
           placeholder="What do you want to say?"
           value={mensajeEnviado}
+          disabled={cargando}
           onChange={(e) => {
             setMensajeEnviado(e.target.value);
           }}
           className="inputEnviar"
         ></textarea>
-        <button className="boton" onClick={sendMessage}>
-          <CircleFadingArrowUp
-            className="botonP"
-            color="#9b9a9a"
-          ></CircleFadingArrowUp>
+        <button className="boton" onClick={sendMessage} disabled={cargando}>
+          <CircleFadingArrowUp className="botonP" color="#9b9a9a" />
         </button>
       </div>
     </div>

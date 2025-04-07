@@ -14,7 +14,6 @@ html {
 .hijoPadre {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width: 1100px;
   height: 80vh;
   overflow-y: auto;
@@ -152,4 +151,7 @@ html {
   align-items: center;
   color: #c5c4c4;
   font-size: 50px;
+}
+.escribiendo {
+  padding-bottom: 30px;
 }
