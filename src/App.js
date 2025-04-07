@@ -4,13 +4,17 @@ import { CircleFadingArrowUp } from "lucide-react";
 
 function App() {
   const [mensajeTotal, setMensajeTotal] = useState([]);
-  const [mensajeEnviado, setMensajeEnviado] = useState("");
-  const [mensjBienvenido, setMensjBienvenido] = useState(true);
   const [cargando, setCargando] = useState(false);
   const [mensjEscribiendolo, setMensjEscribiendolo] = useState("");
-  const [consulta, setConsulta] = useState(true);
 
   const endChat = useRef(null);
+
+  const agregarTotalMjs = (e) => {
+    setMensajeTotal(e);
+  };
+  const cargarEstadoCarga = (e) => {
+    setCargando(e);
+  };
   const textareaRef = useRef(null);
 
   useEffect(() => {
@@ -58,51 +62,6 @@ function App() {
         setMensjEscribiendolo("");
       }
     }, 5);
-  };
-
-  const sendMessage = async () => {
-    console.log(consulta);
-    if (!mensajeEnviado.trim() || !consulta) return;
-    setConsulta(false);
-    setMensjBienvenido(false);
-    const newMessages = {
-      role: "user",
-      content: mensajeEnviado,
-    };
-    const mensjActualizados = [...mensajeTotal, newMessages];
-    setMensajeTotal(mensjActualizados);
-    setMensajeEnviado("");
-    setCargando(true);
-
-    const key =
-      "Bearer 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";
-
-    try {
-      const respuesta = await fetch(
-        "https://openrouter.ai/api/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            Authorization: key,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: "openai/gpt-3.5-turbo",
-            messages: mensjActualizados,
-          }),
-        }
-      );
-
-      const data = await respuesta.json();
-      const respuestaIa =
-        data.choices?.[0]?.message?.content || "Sin respuesta.";
-
-      agregarTextoEscribiendoIa(respuestaIa);
-    } catch (error) {
-      console.error("Error al contactar con la API:", error);
-    } finally {
-      setCargando(false);
-    }
   };
 
   return (
