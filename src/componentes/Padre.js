@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
+import { agregarTextoEscribiendoIa } from "../componentes/AgregarAnimacionEscribir";
+import { preguntasEchas } from "../componentes/funciones";
 import "../App.css";
 import { sendMessageToApi } from "./UsarApi";
 import { CircleFadingArrowUp } from "lucide-react";
 import { CircleSlash2 } from "lucide-react";
-
+import { Biohazard } from "lucide-react";
 function Padre() {
   const [mensajeTotal, setMensajeTotal] = useState([]);
   const [cargando, setCargando] = useState(false);
@@ -11,6 +13,7 @@ function Padre() {
   const [mensajeEnviado, setMensajeEnviado] = useState("");
   const [consulta, setConsulta] = useState(true);
   const [mensjBienvenido, setMensjBienvenido] = useState(true);
+  const [dispararPregunta, setDispararPregunta] = useState(false);
   const endChat = useRef(null);
   const textareaRef = useRef(null);
 
@@ -40,28 +43,21 @@ function Padre() {
     };
   }, [mensajeEnviado]);
 
-  const agregarTextoEscribiendoIa = (respuestaIa) => {
-    let i = 0;
+  useEffect(() => {
+    if (mensajeEnviado) {
+      setDispararPregunta(false);
+      handleSendMessage();
+    }
+  }, [dispararPregunta]);
 
-    setMensjEscribiendolo("");
-
-    const interval = setInterval(() => {
-      if (i < respuestaIa.length) {
-        setMensjEscribiendolo((prev) => prev + respuestaIa[i - 1]);
-        i++;
-      } else {
-        clearInterval(interval);
-
-        setMensajeTotal((valorAnterior) => [
-          ...valorAnterior,
-          { role: "assistant", content: respuestaIa || "Sin respuesta." },
-        ]);
-        setConsulta(true);
-        setMensjEscribiendolo("");
-      }
-    }, 5);
+  const textoEscritoAnimado = (respuestaIa) => {
+    agregarTextoEscribiendoIa({
+      respuestaIa,
+      setMensjEscribiendolo,
+      setMensajeTotal,
+      setConsulta,
+    });
   };
-
   const handleSendMessage = () => {
     sendMessageToApi({
       mensajeEnviado,
@@ -71,7 +67,7 @@ function Padre() {
       setConsulta,
       setMensjBienvenido,
       mensajeTotal,
-      agregarTextoEscribiendoIa,
+      textoEscritoAnimado,
       consulta,
     });
   };
@@ -105,22 +101,42 @@ function Padre() {
 
         {mensjBienvenido && (
           <div className="bienvenida">
-            ¡Bienvenido a GPT, donde estoy aquí para ayudarte con lo que
-            necesites en una sola línea!
+            <Biohazard
+              style={{ marginBottom: "20px" }}
+              color="#9b9a9a"
+              size={122}
+            />
+            <div>
+              ¡Bienvenido a GPT, donde estoy aquí para ayudarte con lo que
+              necesites en una sola línea!
+            </div>
             <div className="preguntasPadreP">
-              <div className="preguntas">
-                <strong>¿Programacion?</strong>
-                <p>es sobre la programadcion lo q nesecito</p>
+              <div
+                onClick={(e) =>
+                  preguntasEchas(e, setDispararPregunta, setMensajeEnviado)
+                }
+                className="preguntas "
+              >
+                <strong>Algoritmos?</strong>
+                <p>Pasos para resolver problemas en programación.</p>
               </div>
-              <div className="preguntas">
-                {" "}
-                <strong>¿Dietas?</strong>
-                <p>es sobre la programadcion lo q nesecito</p>
+              <div
+                onClick={(e) =>
+                  preguntasEchas(e, setDispararPregunta, setMensajeEnviado)
+                }
+                className="preguntas "
+              >
+                <strong>Algoritmos?</strong>
+                <p>Estudio de alimentos y nutrientes para la salud.</p>
               </div>
-              <div className="preguntas">
-                {" "}
-                <strong>¿Paises?</strong>
-                <p>es sobre la programadcion lo q nesecito</p>
+              <div
+                onClick={(e) =>
+                  preguntasEchas(e, setDispararPregunta, setMensajeEnviado)
+                }
+                className="preguntas "
+              >
+                <strong>Desarrollo web?</strong>
+                <p>Creación y mantenimiento de sitios en línea.</p>
               </div>
             </div>
           </div>

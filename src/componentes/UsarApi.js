@@ -6,7 +6,7 @@ export const sendMessageToApi = async ({
   setConsulta,
   setMensjBienvenido,
   mensajeTotal,
-  agregarTextoEscribiendoIa,
+  textoEscritoAnimado,
   consulta,
 }) => {
   if (!mensajeEnviado.trim() || !consulta) return;
@@ -43,7 +43,7 @@ export const sendMessageToApi = async ({
 
     const data = await respuesta.json();
     const respuestaIa = data.choices?.[0]?.message?.content || "Sin respuesta.";
-    agregarTextoEscribiendoIa(respuestaIa);
+    textoEscritoAnimado(respuestaIa);
   } catch (error) {
     console.error("Error al contactar con la API:", error);
   } finally {
