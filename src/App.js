@@ -3,13 +3,11 @@ import "./App.css";
 import { CircleFadingArrowUp } from "lucide-react";
 
 function App() {
-  const [mensajeTotal, setMensajeTotal] = useState([
-    {
-      role: "assistant",
-      content: "Hola soy tu IA",
-    },
-  ]);
+  const [mensajeTotal, setMensajeTotal] = useState([]);
   const [mensajeEnviado, setMensajeEnviado] = useState("");
+  const [mensjBienvenido, setMensjBienvenido] = useState(true);
+  const [cargando, setCargando] = useState(false);
+  const [mensjEscribiendolo, setMensjEscribiendolo] = useState("");
   const endChat = useRef(null);
   const textareaRef = useRef(null);
 
@@ -27,20 +25,33 @@ function App() {
     }
 
     window.addEventListener("keydown", handleKeyPress);
-
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
   }, [mensajeEnviado]);
+
   useEffect(() => {
     if (endChat.current) {
       endChat.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [mensajeTotal]);
 
+  // const agregarTextoEscribiendoIa = (respuestaIa) => {
+  //   let i = 0;
+  // //  setMensjEscribiendolo("");
+  //   const interval = setInterval(() => {
+  //     if (i < respuestaIa.length) {
+  //       setMensjEscribiendolo((prev) => prev + respuestaIa[i]);
+  //       i++;
+  //     } else {
+  //       clearInterval(interval);
+  //     }
+  //   }, 30);
+  // };
+
   const sendMessage = async () => {
     if (!mensajeEnviado.trim()) return;
-
+    setMensjBienvenido(false);
     const newMessages = {
       role: "user",
       content: mensajeEnviado,
@@ -48,6 +59,7 @@ function App() {
     const mensjActualizados = [...mensajeTotal, newMessages];
     setMensajeTotal(mensjActualizados);
     setMensajeEnviado("");
+    setCargando(true);
 
     const key =
       "Bearer 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";
@@ -75,8 +87,11 @@ function App() {
         ...valorAnterior,
         { role: "assistant", content: respuestaIa },
       ]);
+      //agregarTextoEscribiendoIa(respuestaIa);
     } catch (error) {
       console.error("Error al contactar con la API:", error);
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -94,13 +109,32 @@ function App() {
               <div
                 className={`${mensaje.role === "assistant" ? "IA" : "User"} `}
               >
-                <div className="contenido">{mensaje.content}</div>
+                {mensaje.role === "assistant" ? (
+                  <div className="usuarioTexto">{mensaje.content}</div>
+                ) : (
+                  <div className="usuarioTexto">{mensaje.content}</div>
+                )}
               </div>
             </div>
           );
         })}
+
+        {cargando && (
+          <div className="dots-loader">
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+          </div>
+        )}
+        {mensjBienvenido && (
+          <div className="bienvenida">
+            ¡Bienvenido a GPT, donde estoy aquí para ayudarte con lo que
+            necesites en una sola línea!
+          </div>
+        )}
         <div ref={endChat} />
       </div>
+
       <div className="botonEnviar">
         <textarea
           ref={textareaRef}
