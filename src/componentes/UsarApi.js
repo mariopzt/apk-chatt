@@ -5,6 +5,7 @@ export const sendMessageToApi = async ({
   setCargando,
   setConsulta,
   setMensjBienvenido,
+  mensjBienvenido,
   mensajeTotal,
   textoEscritoAnimado,
   consulta,
@@ -12,6 +13,7 @@ export const sendMessageToApi = async ({
   if (!mensajeEnviado.trim() || !consulta) return;
   setConsulta(false);
   setMensjBienvenido(false);
+  localStorage.setItem("valorBienvenido", JSON.stringify(mensjBienvenido));
 
   const newMessages = {
     role: "user",

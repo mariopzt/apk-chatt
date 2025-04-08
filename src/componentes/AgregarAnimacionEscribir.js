@@ -3,6 +3,7 @@ export const agregarTextoEscribiendoIa = ({
   setMensjEscribiendolo,
   setMensajeTotal,
   setConsulta,
+  mensajeTotal,
 }) => {
   let i = 0;
 
@@ -19,6 +20,8 @@ export const agregarTextoEscribiendoIa = ({
         ...valorAnterior,
         { role: "assistant", content: respuestaIa || "Sin respuesta." },
       ]);
+      localStorage.setItem("mensajesGuardados", JSON.stringify(mensajeTotal)); 
+
       setConsulta(true);
       setMensjEscribiendolo("");
     }

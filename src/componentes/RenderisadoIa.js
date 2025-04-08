@@ -3,10 +3,12 @@ import { CircleSlash2 } from "lucide-react";
 import { Biohazard } from "lucide-react";
 import { useEffect } from "react";
 import { preguntasEchas } from "../componentes/funciones";
+import { Menu } from "./Menu";
 
 import "../App.css";
 export function RenderisadoIa({
   mensajeTotal,
+  setMensajeTotal,
   mensjEscribiendolo,
   preguntasEchas,
   mensjBienvenido,
@@ -16,6 +18,7 @@ export function RenderisadoIa({
   textareaRef,
   mensajeEnviado,
   handleSendMessage,
+  setMensjBienvenido,
   endChat,
   dispararPregunta,
 }) {
@@ -71,109 +74,115 @@ export function RenderisadoIa({
   }, [mensajeEnviado]);
   return (
     <div className="padre">
-      <div className="hijoPadre">
-        {mensajeTotal.map((mensaje, index) => {
-          const esUltimoMensaje = index === mensajeTotal.length - 1;
-          const esAsistente = mensaje.role === "assistant";
+      <Menu
+        setMensajeTotal={setMensajeTotal}
+        setMensjBienvenido={setMensjBienvenido}
+      />
+      <div className="PadreDelHijo">
+        <div className="hijoPadre">
+          {mensajeTotal.map((mensaje, index) => {
+            const esUltimoMensaje = index === mensajeTotal.length - 1;
+            const esAsistente = mensaje.role === "assistant";
 
-          return (
-            <div
-              className={`${
-                mensaje.role === "assistant" ? "asistente" : "usuario"
-              } mensjPadre`}
-              key={index}
+            return (
+              <div
+                className={`${
+                  mensaje.role === "assistant" ? "asistente" : "usuario"
+                } mensjPadre`}
+                key={index}
+              >
+                <div
+                  className={`${mensaje.role === "assistant" ? "IA" : "User"}`}
+                >
+                  {esAsistente
+                    ? esUltimoMensaje && mensjEscribiendolo !== ""
+                      ? mensjEscribiendolo
+                      : mensaje.content
+                    : mensaje.content}
+                </div>
+              </div>
+            );
+          })}
+
+          {mensjBienvenido && (
+            <div className="bienvenida">
+              <Biohazard
+                style={{ marginBottom: "20px" }}
+                color="#9b9a9a"
+                size={122}
+              />
+              <div>
+                ¡Bienvenido a GPT, donde estoy aquí para ayudarte con lo que
+                necesites en una sola línea!
+              </div>
+              <div className="preguntasPadreP">
+                <div
+                  onClick={(e) =>
+                    preguntasEchas(e, setDispararPregunta, setMensajeEnviado)
+                  }
+                  className="preguntas "
+                >
+                  <strong>Algoritmos?</strong>
+                  <p>Pasos para resolver problemas en programación.</p>
+                </div>
+                <div
+                  onClick={(e) =>
+                    preguntasEchas(e, setDispararPregunta, setMensajeEnviado)
+                  }
+                  className="preguntas "
+                >
+                  <strong>Algoritmos?</strong>
+                  <p>Estudio de alimentos y nutrientes para la salud.</p>
+                </div>
+                <div
+                  onClick={(e) =>
+                    preguntasEchas(e, setDispararPregunta, setMensajeEnviado)
+                  }
+                  className="preguntas "
+                >
+                  <strong>Desarrollo web?</strong>
+                  <p>Creación y mantenimiento de sitios en línea.</p>
+                </div>
+              </div>
+            </div>
+          )}
+          {cargando && (
+            <div className="dots-loader">
+              <div className="dot"></div>
+              <div className="dot"></div>
+              <div className="dot"></div>
+            </div>
+          )}
+          {mensjEscribiendolo && (
+            <div className="asistente mensjPadre escribiendo">
+              <div className="IA">{mensjEscribiendolo}</div>
+            </div>
+          )}
+          <div ref={endChat} />
+        </div>
+
+        <div className="botonEnviar">
+          <div className="envio">
+            <textarea
+              ref={textareaRef}
+              placeholder="What do you want to say?"
+              value={mensajeEnviado}
+              disabled={cargando}
+              onChange={(e) => setMensajeEnviado(e.target.value)}
+              className="inputEnviar"
+            ></textarea>
+            <button
+              className="boton"
+              onClick={handleSendMessage}
+              disabled={cargando}
             >
-              <div
-                className={`${mensaje.role === "assistant" ? "IA" : "User"}`}
-              >
-                {esAsistente
-                  ? esUltimoMensaje && mensjEscribiendolo !== ""
-                    ? mensjEscribiendolo
-                    : mensaje.content
-                  : mensaje.content}
-              </div>
-            </div>
-          );
-        })}
-
-        {mensjBienvenido && (
-          <div className="bienvenida">
-            <Biohazard
-              style={{ marginBottom: "20px" }}
-              color="#9b9a9a"
-              size={122}
-            />
-            <div>
-              ¡Bienvenido a GPT, donde estoy aquí para ayudarte con lo que
-              necesites en una sola línea!
-            </div>
-            <div className="preguntasPadreP">
-              <div
-                onClick={(e) =>
-                  preguntasEchas(e, setDispararPregunta, setMensajeEnviado)
-                }
-                className="preguntas "
-              >
-                <strong>Algoritmos?</strong>
-                <p>Pasos para resolver problemas en programación.</p>
-              </div>
-              <div
-                onClick={(e) =>
-                  preguntasEchas(e, setDispararPregunta, setMensajeEnviado)
-                }
-                className="preguntas "
-              >
-                <strong>Algoritmos?</strong>
-                <p>Estudio de alimentos y nutrientes para la salud.</p>
-              </div>
-              <div
-                onClick={(e) =>
-                  preguntasEchas(e, setDispararPregunta, setMensajeEnviado)
-                }
-                className="preguntas "
-              >
-                <strong>Desarrollo web?</strong>
-                <p>Creación y mantenimiento de sitios en línea.</p>
-              </div>
-            </div>
+              {cargando ? (
+                <CircleSlash2 className="botonP" color="#9b9a9a" />
+              ) : (
+                <CircleFadingArrowUp className="botonP" color="#9b9a9a" />
+              )}
+            </button>
           </div>
-        )}
-        {cargando && (
-          <div className="dots-loader">
-            <div className="dot"></div>
-            <div className="dot"></div>
-            <div className="dot"></div>
-          </div>
-        )}
-        {mensjEscribiendolo && (
-          <div className="asistente mensjPadre escribiendo">
-            <div className="IA">{mensjEscribiendolo}</div>
-          </div>
-        )}
-        <div ref={endChat} />
-      </div>
-
-      <div className="botonEnviar">
-        <div className="envio">
-          <textarea
-            ref={textareaRef}
-            placeholder="What do you want to say?"
-            value={mensajeEnviado}
-            disabled={cargando}
-            onChange={(e) => setMensajeEnviado(e.target.value)}
-            className="inputEnviar"
-          ></textarea>
-          <button
-            className="boton"
-            onClick={handleSendMessage}
-            disabled={cargando}
-          >
-            {cargando ? (
-              <CircleSlash2 className="botonP" color="#9b9a9a" />
-            ) : (
-              <CircleFadingArrowUp className="botonP" color="#9b9a9a" />
-            )}
-          </button>
         </div>
       </div>
     </div>
