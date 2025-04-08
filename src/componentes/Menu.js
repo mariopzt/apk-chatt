@@ -12,8 +12,6 @@ export function Menu({ setMensajeTotal, setMensjBienvenido }) {
       setMensjBienvenido(true);
       localStorage.removeItem("valorBienvenido");
       localStorage.removeItem("mensajesGuardados");
-
-      
     } else if (id === "1") {
       console.log("Abrir configuración");
     } else if (id === "2") {
@@ -28,17 +26,17 @@ export function Menu({ setMensajeTotal, setMensjBienvenido }) {
       <div className="padreMenuIsquierda">
         <div className="menu__opcion_Padre">
           <div className="menu__opcion">
-            <Plus size={26} id="0" color="#c5c4c4" onClick={borrarTexto} />
+            <Plus size={22} id="0" color="#c5c4c4" onClick={borrarTexto} />
           </div>
           <div className="menu__opcion" id="1" onClick={borrarTexto}>
             {" "}
-            <Settings size={26} color="#c5c4c4" id="2" onClick={borrarTexto} />
+            <Settings size={22} color="#c5c4c4" id="2" onClick={borrarTexto} />
           </div>
           <div className="menu__opcion">
-            <Twitter size={26} color="#c5c4c4" id="3" onClick={borrarTexto} />
+            <Twitter size={22} color="#c5c4c4" id="3" onClick={borrarTexto} />
           </div>
           <div className="menu__opcion">
-            <Instagram size={26} color="#c5c4c4" id="4" onClick={borrarTexto} />
+            <Instagram size={22} color="#c5c4c4" id="4" onClick={borrarTexto} />
           </div>
         </div>
       </div>
