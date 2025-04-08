@@ -81,7 +81,7 @@ html {
 .inputEnviar {
   max-height: 125px;
   margin-top: 10px;
-  width: 600px;
+  width: 100%;
   display: block;
   border-radius: 10px;
   background-color: #2f2f2f;
