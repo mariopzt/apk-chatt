@@ -1,8 +1,9 @@
 import { CircleFadingArrowUp } from "lucide-react";
 import { CircleSlash2 } from "lucide-react";
 import { Biohazard } from "lucide-react";
+import icono from "../componentes/iconnos/icon.png";
+
 import { useEffect } from "react";
-import { preguntasEchas } from "../componentes/funciones";
 import { Menu } from "./Menu";
 
 import "../App.css";
@@ -162,10 +163,11 @@ export function RenderisadoIa({
         </div>
 
         <div className="botonEnviar">
+          <img className="iconoIa" src={icono} alt="icono"></img>
           <div className="envio">
             <textarea
               ref={textareaRef}
-              placeholder="What do you want to say?"
+              placeholder="write anityng...?"
               rows="1"
               value={mensajeEnviado}
               disabled={cargando}
@@ -176,13 +178,7 @@ export function RenderisadoIa({
               className="boton"
               onClick={handleSendMessage}
               disabled={cargando}
-            >
-              {cargando ? (
-                <CircleSlash2 className="botonP" color="#9b9a9a" />
-              ) : (
-                <CircleFadingArrowUp className="botonP" color="#9b9a9a" />
-              )}
-            </button>
+            ></button>
           </div>
         </div>
       </div>
