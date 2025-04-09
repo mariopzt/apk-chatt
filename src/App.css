@@ -28,7 +28,7 @@ html {
   flex-direction: column;
   width: 80%;
   border-radius: 15px;
-  background-color: rgba(99, 99, 99, 0.295);
+  background-color: rgb(65 65 65 / 51%);
   margin: 31px;
 }
 .bienvenidaTexto {
