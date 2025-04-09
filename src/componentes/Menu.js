@@ -1,12 +1,8 @@
 import "../App.css";
-import { Plus } from "lucide-react";
-import { Settings } from "lucide-react";
-import { Twitter } from "lucide-react";
-import { Instagram } from "lucide-react";
-
+import { MailPlus } from "lucide-react";
 export function Menu({ setMensajeTotal, setMensjBienvenido }) {
   const borrarTexto = (e) => {
-    const id = e.target.id;
+    const id = e.currentTarget.dataset.id; // Usamos `e.currentTarget` para acceder al `data-id`
     if (id === "0") {
       setMensajeTotal([]);
       setMensjBienvenido(true);
@@ -23,45 +19,10 @@ export function Menu({ setMensajeTotal, setMensjBienvenido }) {
 
   return (
     <div className="menu">
-      <div className="padreMenuIsquierda">
-        <div className="menu__opcion_Padre">
-          <div className="menu__opcion">
-            <Plus
-              strokeWidth={1}
-              size={20}
-              id="0"
-              color="#c5c4c4"
-              onClick={borrarTexto}
-            />
-          </div>
-          <div className="menu__opcion" id="1" onClick={borrarTexto}>
-            {" "}
-            <Settings
-              strokeWidth={1}
-              size={20}
-              color="#c5c4c4"
-              id="2"
-              onClick={borrarTexto}
-            />
-          </div>
-          <div className="menu__opcion">
-            <Twitter
-              strokeWidth={1}
-              size={20}
-              color="#c5c4c4"
-              id="3"
-              onClick={borrarTexto}
-            />
-          </div>
-          <div className="menu__opcion">
-            <Instagram
-              size={20}
-              strokeWidth={1}
-              color="#c5c4c4"
-              id="4"
-              onClick={borrarTexto}
-            />
-          </div>
+      <div className="derechaMenu">
+        <div onClick={borrarTexto} data-id="0" className="menuDerecha">
+          <MailPlus size={25} strokeWidth={1} color="#c5c4c4" />
+          <h3 className="ajuste">New Chat</h3>
         </div>
       </div>
     </div>
