@@ -13,7 +13,7 @@ export const sendMessageToApi = async ({
   setCancelarActividad,
 }) => {
   if (!mensajeEnviado.trim() || !consulta) return;
-
+  setCargando(true);
   setConsulta(false);
   setMensjBienvenido(() => {
     const nuevoValor = false;

@@ -116,6 +116,7 @@ export function RenderisadoIa({
                 Hey there! I'm GPT-3.5 — here to assist you with whatever you
                 need. Let’s get started!
               </div>
+              <div className="preguntasAutoF">Frequently Asked Questions</div>
               <div className="preguntasPadreP">
                 <div
                   onClick={(e) =>

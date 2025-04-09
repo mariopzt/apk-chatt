@@ -37,9 +37,19 @@ export function Menu({
           <SlidersHorizontal size={25} strokeWidth={1} color="#c5c4c4" />
           <h3 className="ajuste">Settings</h3>
         </div>
-        <div onClick={borrarTexto} data-id="1" className="ajustes">
+        <div onClick={borrarTexto} data-id="2" className="ajustes">
           <Palette size={25} strokeWidth={1} color="#c5c4c4" />
           <h3 className="ajuste">Settings</h3>
+        </div>
+
+        <div className="historial">
+          <div className="historia">Chat History</div>
+          <div className="history">
+            <div className="historia1">Today</div>
+            <div className="historia1">Yesterday</div>
+            <div className="historia1">Last 7 days</div>
+            <div className="historia1">Last 30 days</div>
+          </div>
         </div>
       </div>
     </div>
