@@ -1,6 +1,7 @@
 import "../App.css";
 import { MailPlus } from "lucide-react";
 import { SlidersHorizontal } from "lucide-react";
+import { Palette } from "lucide-react";
 export function Menu({
   setMensajeTotal,
   setMensjBienvenido,
@@ -34,6 +35,10 @@ export function Menu({
         </div>
         <div onClick={borrarTexto} data-id="1" className="ajustes">
           <SlidersHorizontal size={25} strokeWidth={1} color="#c5c4c4" />
+          <h3 className="ajuste">Settings</h3>
+        </div>
+        <div onClick={borrarTexto} data-id="1" className="ajustes">
+          <Palette size={25} strokeWidth={1} color="#c5c4c4" />
           <h3 className="ajuste">Settings</h3>
         </div>
       </div>

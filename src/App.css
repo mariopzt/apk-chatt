@@ -252,7 +252,7 @@ strong {
   height: 100%;
 }
 .menuDerecha {
-  width: auto;
+  width: 150px;
   margin: 10px;
   padding: 7px;
   border: 0.6px solid rgba(179, 179, 179, 0.23);
@@ -263,6 +263,24 @@ strong {
   cursor: pointer;
   align-items: center;
   z-index: 1;
+}
+.derechaMenu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ajustes {
+  display: flex;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+  align-items: center;
+  z-index: 1;
+  border: 0.6px solid rgba(179, 179, 179, 0.23);
+  margin-top: 20px;
+  width: 70%;
+  padding: 2px;
 }
 .ajuste {
   padding-left: 10px;
