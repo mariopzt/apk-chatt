@@ -1,13 +1,29 @@
 import "../App.css";
 import { MailPlus } from "lucide-react";
-export function Menu({ setMensajeTotal, setMensjBienvenido }) {
+export function Menu({
+  setMensajeTotal,
+  setMensjBienvenido,
+  cancelarActividad,
+  setCancelarActividad,
+}) {
   const borrarTexto = (e) => {
-    const id = e.currentTarget.dataset.id; // Usamos `e.currentTarget` para acceder al `data-id`
+    console.log(cancelarActividad);
+    console.log(e);
+
+    const id = e.target.id;
+
     if (id === "0") {
-      setMensajeTotal([]);
-      setMensjBienvenido(true);
-      localStorage.removeItem("valorBienvenido");
-      localStorage.removeItem("mensajesGuardados");
+      if (!cancelarActividad) {
+        setMensajeTotal([]);
+        setMensjBienvenido(true);
+        setCancelarActividad(() => {
+          const acti = true;
+          localStorage.setItem("actividad", JSON.stringify(acti));
+          return acti;
+        });
+        localStorage.removeItem("valorBienvenido");
+        localStorage.removeItem("mensajesGuardados");
+      }
     } else if (id === "1") {
       console.log("Abrir configuración");
     } else if (id === "2") {
@@ -21,6 +37,10 @@ export function Menu({ setMensajeTotal, setMensjBienvenido }) {
     <div className="menu">
       <div className="derechaMenu">
         <div onClick={borrarTexto} data-id="0" className="menuDerecha">
+          <MailPlus size={25} strokeWidth={1} color="#c5c4c4" />
+          <h3 className="ajuste">New Chat</h3>
+        </div>
+        <div onClick={borrarTexto} data-id="1" className="menuDerecha">
           <MailPlus size={25} strokeWidth={1} color="#c5c4c4" />
           <h3 className="ajuste">New Chat</h3>
         </div>

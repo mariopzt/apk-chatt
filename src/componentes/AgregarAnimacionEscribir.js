@@ -1,36 +1,46 @@
 export const agregarTextoEscribiendoIa = ({
   respuestaIa,
+  mensjBienvenido,
+  setCancelarActividad,
+  setCargando,
+  cancelarActividad,
   setMensjEscribiendolo,
   setMensajeTotal,
   setConsulta,
-  mensajeTotal,
 }) => {
   let i = 0;
 
-  setMensjEscribiendolo(""); // Limpiamos el texto animado al inicio
+  setMensjEscribiendolo("");
 
   const interval = setInterval(() => {
     if (i < respuestaIa.length) {
-      setMensjEscribiendolo((prev) => prev + respuestaIa[i]); // Corregido: `i - 1` a `i`
+      setMensjEscribiendolo((prev) => prev + respuestaIa[i - 1]);
+      if (mensjBienvenido) {
+        clearInterval(interval);
+        return;
+      }
+
       i++;
     } else {
-      clearInterval(interval); // Terminamos la animación
+      clearInterval(interval);
 
-      // Actualizamos el mensaje total con el mensaje completo
       setMensajeTotal((valorAnterior) => {
         const nuevo = [
           ...valorAnterior,
           { role: "assistant", content: respuestaIa || "Sin respuesta." },
         ];
+        setCargando(false);
+        setCancelarActividad(true);
 
-        // Guardamos el estado actualizado en localStorage
+        localStorage.setItem("actividad", JSON.stringify(cancelarActividad));
+
         localStorage.setItem("mensajesGuardados", JSON.stringify(nuevo));
 
-        setConsulta(true); // Indicamos que ya terminó la animación
-        setMensjEscribiendolo(""); // Limpiamos el texto de "escribiendo"
+        setConsulta(true);
+        setMensjEscribiendolo("");
 
-        return nuevo; // Retornamos el nuevo estado
+        return nuevo;
       });
     }
-  }, 6); // Retraso de 50 ms entre cada letra (puedes ajustarlo si quieres que sea más rápido o lento)
+  }, 6);
 };

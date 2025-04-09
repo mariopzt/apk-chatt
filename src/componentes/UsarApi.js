@@ -9,17 +9,21 @@ export const sendMessageToApi = async ({
   mensajeTotal,
   textoEscritoAnimado,
   consulta,
+  cancelarActividad,
+  setCancelarActividad,
 }) => {
   if (!mensajeEnviado.trim() || !consulta) return;
+
   setConsulta(false);
   setMensjBienvenido(() => {
     const nuevoValor = false;
     localStorage.setItem("valorBienvenido", JSON.stringify(nuevoValor));
     return nuevoValor;
   });
+  setCancelarActividad(false);
 
-  console.log(mensjBienvenido);
-
+  localStorage.setItem("actividad", JSON.stringify(cancelarActividad));
+  console.log(cancelarActividad);
   const newMessages = {
     role: "user",
     content: mensajeEnviado,
@@ -27,10 +31,9 @@ export const sendMessageToApi = async ({
   const mensjActualizados = [...mensajeTotal, newMessages];
   setMensajeTotal(mensjActualizados);
   setMensajeEnviado("");
-  setCargando(true);
 
   const key =
-    "Bearer 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";
+    "Bearer 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";
 
   try {
     const respuesta = await fetch(
@@ -50,6 +53,7 @@ export const sendMessageToApi = async ({
 
     const data = await respuesta.json();
     const respuestaIa = data.choices?.[0]?.message?.content || "Sin respuesta.";
+
     textoEscritoAnimado(respuestaIa);
   } catch (error) {
     console.error("Error al contactar con la API:", error);

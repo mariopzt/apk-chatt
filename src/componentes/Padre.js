@@ -18,22 +18,33 @@ function Padre() {
     const mensajesGuardados = localStorage.getItem("valorBienvenido");
     return mensajesGuardados ? JSON.parse(mensajesGuardados) : true;
   });
+  const [cancelarActividad, setCancelarActividad] = useState(() => {
+    const actividad = localStorage.getItem("actividad");
+    return actividad ? JSON.parse(actividad) : true;
+  });
+
   const [dispararPregunta, setDispararPregunta] = useState(false);
   const endChat = useRef(null);
   const textareaRef = useRef(null);
   const textoEscritoAnimado = (respuestaIa) => {
     agregarTextoEscribiendoIa({
+      setMensjEscribiendolo,
+
       setMensajeTotal,
       setMensjBienvenido,
+      mensjBienvenido,
+      setCargando,
       mensajeTotal,
+      cancelarActividad,
+      setCancelarActividad,
       respuestaIa,
-      setMensjEscribiendolo,
       setMensajeTotal,
       setConsulta,
     });
   };
   const handleSendMessage = () => {
     sendMessageToApi({
+      cancelarActividad,
       mensajeEnviado,
       setMensajeTotal,
       setMensajeEnviado,
@@ -44,6 +55,7 @@ function Padre() {
       mensajeTotal,
       textoEscritoAnimado,
       consulta,
+      setCancelarActividad,
     });
   };
 
@@ -66,6 +78,9 @@ function Padre() {
         setCargando={setCargando}
         setConsulta={setConsulta}
         setMensjBienvenido={setMensjBienvenido}
+        setCancelarActividad={setCancelarActividad}
+        cancelarActividad={cancelarActividad}
+        consulta={consulta}
       />
     </>
   );

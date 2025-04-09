@@ -22,6 +22,8 @@ export function RenderisadoIa({
   setMensjBienvenido,
   endChat,
   dispararPregunta,
+  cancelarActividad,
+  setCancelarActividad,
 }) {
   useEffect(() => {
     if (endChat.current) {
@@ -78,6 +80,9 @@ export function RenderisadoIa({
       <Menu
         setMensajeTotal={setMensajeTotal}
         setMensjBienvenido={setMensjBienvenido}
+        mensjBienvenido={mensjBienvenido}
+        setCancelarActividad={setCancelarActividad}
+        cancelarActividad={cancelarActividad}
       />
       <div className="PadreDelHijo">
         <div className="hijoPadre">
@@ -174,14 +179,14 @@ export function RenderisadoIa({
               placeholder="write anityng...?"
               rows="1"
               value={mensajeEnviado}
-              disabled={cargando}
+              disabled={cancelarActividad}
               onChange={(e) => setMensajeEnviado(e.target.value)}
               className="inputEnviar"
             ></textarea>
             <button
               className="boton"
               onClick={handleSendMessage}
-              disabled={cargando}
+              disabled={cancelarActividad}
             ></button>
           </div>
         </div>
