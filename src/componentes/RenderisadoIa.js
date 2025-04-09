@@ -107,14 +107,9 @@ export function RenderisadoIa({
 
           {mensjBienvenido && (
             <div className="bienvenida">
-              <Biohazard
-                style={{ marginBottom: "20px" }}
-                color="#9b9a9a"
-                size={122}
-              />
-              <div>
-                ¡Bienvenido a GPT, donde estoy aquí para ayudarte con lo que
-                necesites en una sola línea!
+              <div className="bienvenidaTexto">
+                Hey there! I'm GPT-3.5 — here to assist you with whatever you
+                need. Let’s get started!
               </div>
               <div className="preguntasPadreP">
                 <div
@@ -123,8 +118,11 @@ export function RenderisadoIa({
                   }
                   className="preguntas "
                 >
-                  <strong>Algoritmos?</strong>
-                  <p>Pasos para resolver problemas en programación.</p>
+                  <strong>What are algorithms?</strong>
+                  <p>
+                    Algorithms are step-by-step instructions used to solve
+                    problems or perform tasks in programming.
+                  </p>
                 </div>
                 <div
                   onClick={(e) =>
@@ -132,8 +130,11 @@ export function RenderisadoIa({
                   }
                   className="preguntas "
                 >
-                  <strong>Algoritmos?</strong>
-                  <p>Estudio de alimentos y nutrientes para la salud.</p>
+                  <strong>What is web development?</strong>
+                  <p>
+                    Building and managing websites, including layout, content,
+                    and functionality.
+                  </p>
                 </div>
                 <div
                   onClick={(e) =>
@@ -141,8 +142,11 @@ export function RenderisadoIa({
                   }
                   className="preguntas "
                 >
-                  <strong>Desarrollo web?</strong>
-                  <p>Creación y mantenimiento de sitios en línea.</p>
+                  <strong>AI (Artificial Intelligence)</strong>
+                  <p>
+                    Smart tech that learns, improves, and helps with human-like
+                    tasks.
+                  </p>
                 </div>
               </div>
             </div>

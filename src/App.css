@@ -22,7 +22,7 @@ html {
 }
 .PadreDelHijo {
   display: flex;
-  padding: 20px;
+  padding: 30px;
 
   align-items: center;
   flex-direction: column;
@@ -30,6 +30,12 @@ html {
   border-radius: 15px;
   background-color: rgba(99, 99, 99, 0.295);
   margin: 31px;
+}
+.bienvenidaTexto {
+  color: rgba(204, 204, 204, 1);
+  font-size: 40px;
+  width: 700px;
+  font-weight: 600;
 }
 
 .mensjPadre {
@@ -199,19 +205,23 @@ html {
   margin-top: 50px;
 }
 .preguntas {
-  width: auto;
-  border: 0.5px solid #c5c4c41a;
+  border: 0.6px solid rgba(179, 179, 179, 0.23);
+  font-size: 15px;
   padding: 10px;
-  background-color: #2f2f2f;
+  width: 280px;
+  height: 180px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: auto;
   margin: 20px;
   cursor: pointer;
+  box-shadow: 0 2px 1px #00000031;
   border-radius: 10px;
+}
+strong {
+  font-size: 19px;
 }
 .menu__opcion {
   width: 40px;
