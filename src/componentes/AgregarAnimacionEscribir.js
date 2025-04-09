@@ -9,17 +9,14 @@ export const agregarTextoEscribiendoIa = ({
   setConsulta,
 }) => {
   let i = 0;
+  setCancelarActividad(false);
 
   setMensjEscribiendolo("");
+  console.log(respuestaIa);
 
   const interval = setInterval(() => {
     if (i < respuestaIa.length) {
       setMensjEscribiendolo((prev) => prev + respuestaIa[i - 1]);
-      if (mensjBienvenido) {
-        clearInterval(interval);
-        return;
-      }
-
       i++;
     } else {
       clearInterval(interval);
@@ -30,7 +27,6 @@ export const agregarTextoEscribiendoIa = ({
           { role: "assistant", content: respuestaIa || "Sin respuesta." },
         ];
         setCargando(false);
-        setCancelarActividad(true);
 
         localStorage.setItem("actividad", JSON.stringify(cancelarActividad));
 
@@ -38,6 +34,7 @@ export const agregarTextoEscribiendoIa = ({
 
         setConsulta(true);
         setMensjEscribiendolo("");
+        setCancelarActividad(true);
 
         return nuevo;
       });

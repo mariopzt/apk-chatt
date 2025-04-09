@@ -1,5 +1,6 @@
 import "../App.css";
 import { MailPlus } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 export function Menu({
   setMensajeTotal,
   setMensjBienvenido,
@@ -7,29 +8,20 @@ export function Menu({
   setCancelarActividad,
 }) {
   const borrarTexto = (e) => {
+    const id = e.currentTarget.dataset.id; // <- así sí lo agarra
+    console.log(id);
     console.log(cancelarActividad);
-    console.log(e);
-
-    const id = e.target.id;
 
     if (id === "0") {
-      if (!cancelarActividad) {
+      if (cancelarActividad) {
+        console.log("entra");
         setMensajeTotal([]);
         setMensjBienvenido(true);
-        setCancelarActividad(() => {
-          const acti = true;
-          localStorage.setItem("actividad", JSON.stringify(acti));
-          return acti;
-        });
         localStorage.removeItem("valorBienvenido");
         localStorage.removeItem("mensajesGuardados");
       }
     } else if (id === "1") {
       console.log("Abrir configuración");
-    } else if (id === "2") {
-      window.open("https://twitter.com", "_blank");
-    } else if (id === "3") {
-      window.open("https://instagram.com", "_blank");
     }
   };
 
@@ -40,9 +32,9 @@ export function Menu({
           <MailPlus size={25} strokeWidth={1} color="#c5c4c4" />
           <h3 className="ajuste">New Chat</h3>
         </div>
-        <div onClick={borrarTexto} data-id="1" className="menuDerecha">
-          <MailPlus size={25} strokeWidth={1} color="#c5c4c4" />
-          <h3 className="ajuste">New Chat</h3>
+        <div onClick={borrarTexto} data-id="1" className="ajustes">
+          <SlidersHorizontal size={25} strokeWidth={1} color="#c5c4c4" />
+          <h3 className="ajuste">Settings</h3>
         </div>
       </div>
     </div>

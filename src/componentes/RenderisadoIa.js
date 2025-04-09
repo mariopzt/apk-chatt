@@ -179,14 +179,14 @@ export function RenderisadoIa({
               placeholder="write anityng...?"
               rows="1"
               value={mensajeEnviado}
-              disabled={cancelarActividad}
+              disabled={!cancelarActividad}
               onChange={(e) => setMensajeEnviado(e.target.value)}
               className="inputEnviar"
             ></textarea>
             <button
               className="boton"
               onClick={handleSendMessage}
-              disabled={cancelarActividad}
+              disabled={!cancelarActividad}
             ></button>
           </div>
         </div>
