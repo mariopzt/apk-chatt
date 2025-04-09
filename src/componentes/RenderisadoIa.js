@@ -166,6 +166,7 @@ export function RenderisadoIa({
             <textarea
               ref={textareaRef}
               placeholder="What do you want to say?"
+              rows="1"
               value={mensajeEnviado}
               disabled={cargando}
               onChange={(e) => setMensajeEnviado(e.target.value)}

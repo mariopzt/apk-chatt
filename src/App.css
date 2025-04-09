@@ -70,34 +70,41 @@ html {
 }
 .botonEnviar {
   margin-top: 1.5rem;
-  min-height: 4rem;
-  max-height: 200px;
-  width: 50%;
+  min-height: 3rem;
+  max-height: 10rem;
+  width: 60%;
   border-radius: 10px;
   background-color: rgba(37, 35, 49, 0.65);
   padding-left: 20px;
   font-size: 16px;
-  overflow: hidden;
   margin-left: 20px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
 }
 
 .inputEnviar {
-  max-height: 125px;
-  margin-top: 10px;
   width: 100%;
-  display: block;
-  border-radius: 10px;
-  background-color: transparent;
-  color: #c5c4c4;
-  padding-left: 20px;
+  align-self: center;
   font-size: 16px;
+  line-height: 1.4;
   resize: none;
   overflow-y: auto;
-  border: 0;
+  border-radius: 5px;
+  border: none;
   outline: none;
-  white-space: pre-wrap;
-  padding-bottom: 20px;
-  word-wrap: break-word;
+  background-color: transparent;
+  color: aliceblue;
+  margin: 10pxs;
+  box-sizing: border-box;
+  min-height: 40px;
+  max-height: 80px;
+  padding-left: 20px;
+  overflow-y: auto;
+}
+.inputEnviar::placeholder {
+  color: #ff0000; /* Cambia el color del placeholder */
+  vertical-align: middle; /* Centra el placeholder verticalmente sin usar line-height */
 }
 
 .inputEnviar::-webkit-scrollbar {
@@ -166,6 +173,7 @@ html {
 .envio {
   width: 100%;
   display: flex;
+  justify-content: space-around;
 }
 .preguntasPadreP {
   font-size: 18px;
