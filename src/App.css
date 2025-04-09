@@ -1,8 +1,8 @@
 html {
   background: linear-gradient(
-    to right,
-    rgba(98, 0, 53, 0.4),
-    rgba(0, 11, 54, 0.38)
+    to top right,
+    rgba(83, 0, 44, 0.856),
+    rgba(0, 11, 54, 0.849)
   );
 }
 .padre {
@@ -62,9 +62,13 @@ html {
   word-wrap: break-word;
   transition: all 0.3s ease;
 }
+.IA {
+  color: rgba(204, 204, 204, 0.74);
+  font-size: 17px;
+}
 
 .User {
-  background-color: red;
+  border: 0.6px solid rgba(179, 179, 179, 0.23);
   padding: 8px 25px 8px 25px;
   border-radius: 10px;
 }
