@@ -21,7 +21,6 @@ function Padre() {
   const [dispararPregunta, setDispararPregunta] = useState(false);
   const endChat = useRef(null);
   const textareaRef = useRef(null);
-  console.log(mensajeTotal);
   const textoEscritoAnimado = (respuestaIa) => {
     agregarTextoEscribiendoIa({
       setMensajeTotal,

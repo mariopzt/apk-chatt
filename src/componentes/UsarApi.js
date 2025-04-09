@@ -12,8 +12,13 @@ export const sendMessageToApi = async ({
 }) => {
   if (!mensajeEnviado.trim() || !consulta) return;
   setConsulta(false);
-  setMensjBienvenido(false);
-  localStorage.setItem("valorBienvenido", JSON.stringify(mensjBienvenido));
+  setMensjBienvenido(() => {
+    const nuevoValor = false;
+    localStorage.setItem("valorBienvenido", JSON.stringify(nuevoValor));
+    return nuevoValor;
+  });
+
+  console.log(mensjBienvenido);
 
   const newMessages = {
     role: "user",
