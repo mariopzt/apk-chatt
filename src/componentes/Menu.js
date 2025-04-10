@@ -2,6 +2,7 @@ import "../App.css";
 import { MailPlus } from "lucide-react";
 import { SlidersHorizontal } from "lucide-react";
 import { Palette } from "lucide-react";
+
 export function Menu({
   setMensajeTotal,
   setMensjBienvenido,
@@ -11,21 +12,35 @@ export function Menu({
   setArray_Padre,
   array_Padre,
 }) {
+  let lastSelectedMessage = null;
+
   const verMensj = (e) => {
-    console.log(e);
+    const i = e.target.id;
+    const documentoEstilos = document.getElementById(i);
+    if (lastSelectedMessage && lastSelectedMessage.id !== documentoEstilos.id) {
+      console.log("object");
+      lastSelectedMessage.style.backgroundColor = "";
+    }
+
+    // Marca el mensaje actual con color rojo
+    if (documentoEstilos) {
+      documentoEstilos.style.backgroundColor = "red";
+
+      lastSelectedMessage = documentoEstilos; // Actualiza el último mensaje seleccionado
+      console.log(lastSelectedMessage);
+    }
+    const mensjPasad = array_Padre[i];
+    setMensajeTotal(mensjPasad);
   };
 
   const borrarTexto = (e) => {
-    const id = e.currentTarget.dataset.id; // <- así sí lo agarra
-
+    const id = e.currentTarget.dataset.id;
     if (id === "0") {
       if (cancelarActividad) {
-        const nuevoArray = [...array_Padre, mensajeTotal];
-
+        const nuevoArray = [mensajeTotal, ...array_Padre];
         setArray_Padre(nuevoArray);
 
         localStorage.setItem("padreArray", JSON.stringify(nuevoArray));
-
         setMensajeTotal([]);
         setMensjBienvenido(true);
         localStorage.removeItem("valorBienvenido");
@@ -61,7 +76,12 @@ export function Menu({
                   const e = innerArray[0];
 
                   return (
-                    <div onClick={verMensj} id={index} className="historia1">
+                    <div
+                      key={index}
+                      onClick={verMensj}
+                      id={index}
+                      className="historia1"
+                    >
                       {e.content || "Contenido no disponible"}
                     </div>
                   );
