@@ -23,7 +23,6 @@ export const sendMessageToApi = async ({
   setCancelarActividad(false);
 
   localStorage.setItem("actividad", JSON.stringify(cancelarActividad));
-  console.log(cancelarActividad);
   const newMessages = {
     role: "user",
     content: mensajeEnviado,

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { agregarTextoEscribiendoIa } from "../componentes/AgregarAnimacionEscribir";
 import { preguntasEchas } from "../componentes/funciones";
 import "../App.css";
@@ -10,6 +10,11 @@ function Padre() {
     const mensajesGuardados = localStorage.getItem("mensajesGuardados");
     return mensajesGuardados ? JSON.parse(mensajesGuardados) : [];
   });
+  const [array_Padre, setArray_Padre] = useState(() => {
+    const mensajesGuardados = localStorage.getItem("padreArray");
+    return mensajesGuardados ? JSON.parse(mensajesGuardados) : [];
+  });
+
   const [cargando, setCargando] = useState(false);
   const [mensjEscribiendolo, setMensjEscribiendolo] = useState("");
   const [mensajeEnviado, setMensajeEnviado] = useState("");
@@ -26,6 +31,7 @@ function Padre() {
   const [dispararPregunta, setDispararPregunta] = useState(false);
   const endChat = useRef(null);
   const textareaRef = useRef(null);
+
   const textoEscritoAnimado = (respuestaIa) => {
     agregarTextoEscribiendoIa({
       setMensjEscribiendolo,
@@ -42,6 +48,7 @@ function Padre() {
       setConsulta,
     });
   };
+
   const handleSendMessage = () => {
     sendMessageToApi({
       cancelarActividad,
@@ -81,6 +88,8 @@ function Padre() {
         setCancelarActividad={setCancelarActividad}
         cancelarActividad={cancelarActividad}
         consulta={consulta}
+        array_Padre={array_Padre}
+        setArray_Padre={setArray_Padre}
       />
     </>
   );

@@ -12,7 +12,6 @@ export const agregarTextoEscribiendoIa = ({
   setCancelarActividad(false);
 
   setMensjEscribiendolo("");
-  console.log(respuestaIa);
 
   const interval = setInterval(() => {
     if (i < respuestaIa.length) {

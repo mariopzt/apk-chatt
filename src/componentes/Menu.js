@@ -5,17 +5,27 @@ import { Palette } from "lucide-react";
 export function Menu({
   setMensajeTotal,
   setMensjBienvenido,
+  mensajeTotal,
   cancelarActividad,
   setCancelarActividad,
+  setArray_Padre,
+  array_Padre,
 }) {
+  const verMensj = (e) => {
+    console.log(e);
+  };
+
   const borrarTexto = (e) => {
     const id = e.currentTarget.dataset.id; // <- así sí lo agarra
-    console.log(id);
-    console.log(cancelarActividad);
 
     if (id === "0") {
       if (cancelarActividad) {
-        console.log("entra");
+        const nuevoArray = [...array_Padre, mensajeTotal];
+
+        setArray_Padre(nuevoArray);
+
+        localStorage.setItem("padreArray", JSON.stringify(nuevoArray));
+
         setMensajeTotal([]);
         setMensjBienvenido(true);
         localStorage.removeItem("valorBienvenido");
@@ -45,10 +55,19 @@ export function Menu({
         <div className="historial">
           <div className="historia">Chat History</div>
           <div className="history">
-            <div className="historia1">Today</div>
-            <div className="historia1">Yesterday</div>
-            <div className="historia1">Last 7 days</div>
-            <div className="historia1">Last 30 days</div>
+            {array_Padre &&
+              array_Padre.map((innerArray, index) => {
+                if (innerArray.length > 0) {
+                  const e = innerArray[0];
+
+                  return (
+                    <div onClick={verMensj} id={index} className="historia1">
+                      {e.content || "Contenido no disponible"}
+                    </div>
+                  );
+                }
+                return null;
+              })}
           </div>
         </div>
       </div>

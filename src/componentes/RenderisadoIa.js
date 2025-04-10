@@ -24,6 +24,8 @@ export function RenderisadoIa({
   dispararPregunta,
   cancelarActividad,
   setCancelarActividad,
+  array_Padre,
+  setArray_Padre,
 }) {
   useEffect(() => {
     if (endChat.current) {
@@ -78,6 +80,9 @@ export function RenderisadoIa({
   return (
     <div className="padre">
       <Menu
+        array_Padre={array_Padre}
+        mensajeTotal={mensajeTotal}
+        setArray_Padre={setArray_Padre}
         setMensajeTotal={setMensajeTotal}
         setMensjBienvenido={setMensjBienvenido}
         mensjBienvenido={mensjBienvenido}
