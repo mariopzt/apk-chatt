@@ -26,6 +26,7 @@ export const sendMessageToApi = async ({
   const newMessages = {
     role: "user",
     content: mensajeEnviado,
+    calor: false,
   };
   const mensjActualizados = [...mensajeTotal, newMessages];
   setMensajeTotal(mensjActualizados);

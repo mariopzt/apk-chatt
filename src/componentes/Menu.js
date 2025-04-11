@@ -25,10 +25,8 @@ export function Menu({
     // Marca el mensaje actual con color rojo
     if (documentoEstilos) {
       documentoEstilos.style.backgroundColor = "red";
-
-      lastSelectedMessage = documentoEstilos; // Actualiza el último mensaje seleccionado
-      console.log(lastSelectedMessage);
     }
+    console.log(array_Padre[i]);
     const mensjPasad = array_Padre[i];
     setMensajeTotal(mensjPasad);
   };
